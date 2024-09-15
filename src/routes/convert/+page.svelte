@@ -19,12 +19,11 @@
 
 	const convert = () => {
 		const paragraphs = input.split('\n');
-		const result: string[] = [];
-		paragraphs.forEach((paragraph) => {
-			const text = paragraph.split(/[ -]/);
-			const processed = text
+		const result = paragraphs.map((paragraph) => {
+			const words = paragraph.split(/[ -]/);
+			const processed = words
 				.map((word, index) => {
-					if (index % saccade != 0) {
+					if (index % saccade !== 0) {
 						return word;
 					}
 					const bfix = Math.floor((word.length * fixation) / 5);
@@ -33,7 +32,7 @@
 						return `<span style="font-weight:bold;">${word}</span>`;
 					}
 					const bionic = letters.map((letter, i) => {
-						if (i == bfix) {
+						if (i === bfix) {
 							return '</span>' + letter;
 						}
 						return letter;
@@ -41,9 +40,9 @@
 					return '<span style="font-weight:bold;">' + bionic.join('');
 				})
 				.join(' ');
-			result.push(processed);
+			return `<p>${processed}</p>`;
 		});
-		return `<p>${result.join('<br />')}</p>`;
+		return result.join('<br />');
 	};
 </script>
 
